@@ -1,0 +1,189 @@
+body
+{
+    margin: 0;
+}
+
+p, input, select
+{
+    font: 18px arial, sans-serif;
+    color: rgb(70,70,70);
+    line-height: 30px;
+}
+
+#top-bar
+{
+    margin: 0;
+    padding: 0 4px;
+    height: 52px;
+    width: 100%;
+    position: fixed;
+ 
+    background-color: rgb(170,0,40);
+}
+
+#top-bar .logo
+{
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 5px;
+    float: left;
+
+    font: 38px georgia, serif;
+}
+
+#top-bar .logo a
+{
+    text-decoration: none;
+    color: white;
+}
+
+#top-bar .logo a:hover
+{
+    border-bottom: 1px solid white;
+}
+
+#top-bar nav
+{
+    float: left;
+    margin-left: 30px;
+}
+    
+#top-bar nav ul
+{
+    margin: 0;
+    padding: 0;
+
+    list-style-type: none;
+}
+
+#top-bar nav li
+{
+    position: relative;
+    display: block;
+    margin-left: 0;
+    margin-right: 15px;
+    float: left;
+    height: 52px; /*Height of #top-bar */
+}
+
+#top-bar nav li a
+{
+    margin-bottom: -12px;
+    display: block;
+    padding: 12px 2px;
+
+    color: white;
+    font: 22px georgia, serif;
+    text-decoration: none;
+
+    transition: 0.2s background-color;
+    -webkit-transition: 0.2s background-color;
+    -moz-transition: 0.2s background-color;
+}
+
+#top-bar nav li a:hover
+{
+    text-decoration: underline;
+}
+
+#content
+{
+    position: absolute;
+    top: 52px;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+
+#content h2
+{
+    margin-bottom: 0;
+    margin-top: 0;
+	    
+    font: 62px georgia, serif;
+    color: rgb(170,0,40);
+}
+
+#content .col
+{
+    float: left;
+    margin-bottom: 20px;
+}
+
+#content .index-col
+{
+    width: 200px;
+    clear: left;
+}
+
+#content .col p, #content .col input
+{
+    margin: 0;
+}
+
+#content .col input[type=text]
+{
+    width: 250px;
+    border: 1px solid rgb(170,170,170);
+    padding: 4px;
+    font-size: 16px;
+	line-height: normal;
+}
+
+#content .col input[type=text]:focus
+{
+    border: 1px solid rgb(205,87,40);
+    outline: none;
+}
+
+#content .col select
+{
+	border: 1px solid rgb(170,170,170);
+}
+
+#content .error
+{
+	display: none;
+	float: left;	
+	position: relative;
+	top: -5px;	
+	
+	margin-left: 40px;
+	
+	font-weight: bold;
+	color: rgb(110,110,110);
+}
+
+#content .submit-creation
+{
+    clear: both;
+    display: block;
+	float: left;
+	
+    padding: 7px;
+
+    font-family: georgia, serif;
+    color: white;
+    border: 2px solid white;
+    outline: 1px solid rgb(170,0,40);
+    background-color: rgb(170,0,40);
+    
+/*    transition: 1.5s padding, 1.5s transform, 1.5s font-size;
+    -webkit-transition: 1.5s padding, 1.5s -webkit-transform, 1.5s font-size;
+    -moz-transition: 1.5s padding, 1.5s -moz-transform, 1.5s font-size;
+    -o-transition: 1.5s padding, 1.5s -o-transform, 1.5s font-size;*/
+}
+
+#content .submit-creation:hover
+{
+    cursor: pointer;
+    background-color: rgb(220,0,80);
+}
+
+.color_cell
+{
+	display: block; 
+	float: left; 
+	height: 10px; 
+	width: 10px; 
+	background-position:center;
+}
