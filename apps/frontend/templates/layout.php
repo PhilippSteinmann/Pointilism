@@ -7,22 +7,22 @@
     <?php include_stylesheets() ?>
 </head>
 <body>
-    <div id="top-bar">
+    <header>
         <h1 class="logo">
-	    <a href="/">
-	        POINTILISM
-            </a>
-	</h1>
+			<a href="/">
+				POINTILISM
+			</a>
+		</h1>
 	
-	<nav>
-	    <ul>
-	        <li><a href="/">Create</a> </li>
-		<li><a href="/view">View </a> </li>
-		<li><a href="/about">About </a> </li>
-	    </ul>
+		<nav>
+			<ul>
+				<li><a href="/">Create</a> </li>
+				<li><a href="/view">View </a> </li>
+				<li><a href="/about">About </a> </li>
+			</ul>
 
-	</nav>
-    </div>
+		</nav>
+    </header>
     <div id="content">
           <?php echo $sf_content ?>
     </div>

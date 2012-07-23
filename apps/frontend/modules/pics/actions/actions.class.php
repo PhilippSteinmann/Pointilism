@@ -62,11 +62,16 @@ class picsActions extends sfActions
 			$cell_size = $cell_sizes["medium"];
 		}
 		
-		$mosaic_w = 700;
-		$mosaic_h = ceil($mosaic_h * $img_ratio);
+		$user_large_mosaic = $request->getPostParameter("large_mosaic"); //Checkbox for large mosaic
+		
+		$mosaic_w = isset($user_large_mosaic) ? 1600 : 800; //If yes, mosaic is 1600px. Else, 800px.
+		$mosaic_h = ceil($mosaic_w * $img_ratio);
+		
+		$image_w = $mosaic_w / $cell_size; //Image shrunk down so that later, $image_w * $cell_size = $mosaic_w
+		$image_h = ceil($image_h * $img_ratio);
 		
 		$size_arr = getimagesize($img_path);
-		ImageManipulation::resize_image($img_path, $img, $size_arr, $mosaic_w, $mosaic_h);
+		ImageManipulation::resize_image($img_path, $img, $size_arr, $image_w, $image_h);
 	
 		$this->getUser()->setAttribute("img_path", $img_path);
 		$this->getUser()->setAttribute("cell_size", $cell_size);

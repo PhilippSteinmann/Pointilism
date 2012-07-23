@@ -3,14 +3,14 @@ body
     margin: 0;
 }
 
-p, input, select
+p, input, select, label
 {
     font: 18px arial, sans-serif;
     color: rgb(70,70,70);
     line-height: 30px;
 }
 
-#top-bar
+header
 {
     margin: 0;
     padding: 0 4px;
@@ -21,7 +21,7 @@ p, input, select
     background-color: rgb(170,0,40);
 }
 
-#top-bar .logo
+header .logo
 {
     margin-top: 0;
     margin-bottom: 0;
@@ -31,24 +31,24 @@ p, input, select
     font: 38px georgia, serif;
 }
 
-#top-bar .logo a
+header .logo a
 {
     text-decoration: none;
     color: white;
 }
 
-#top-bar .logo a:hover
+header .logo a:hover
 {
     border-bottom: 1px solid white;
 }
 
-#top-bar nav
+header nav
 {
     float: left;
     margin-left: 30px;
 }
     
-#top-bar nav ul
+header nav ul
 {
     margin: 0;
     padding: 0;
@@ -56,17 +56,17 @@ p, input, select
     list-style-type: none;
 }
 
-#top-bar nav li
+header nav li
 {
     position: relative;
     display: block;
     margin-left: 0;
     margin-right: 15px;
     float: left;
-    height: 52px; /*Height of #top-bar */
+    height: 52px; /*Height of header */
 }
 
-#top-bar nav li a
+header nav li a
 {
     margin-bottom: -12px;
     display: block;
@@ -81,7 +81,7 @@ p, input, select
     -moz-transition: 0.2s background-color;
 }
 
-#top-bar nav li a:hover
+header nav li a:hover
 {
     text-decoration: underline;
 }
@@ -90,6 +90,9 @@ p, input, select
 {
     position: absolute;
     top: 52px;
+	left: 0;
+	right: 0;
+	
     padding-top: 20px;
     padding-left: 30px;
 }
@@ -141,6 +144,12 @@ p, input, select
 	border: 1px solid rgb(170,170,170);
 }
 
+#content .col label
+{
+	line-height: normal;
+	margin-left: 3px;
+}
+
 #content .error
 {
 	display: none;
@@ -187,4 +196,11 @@ p, input, select
 	height: 10px; 
 	width: 10px; 
 	background-position:center;
+}
+
+canvas
+{
+	display: block;
+	
+	margin: 0 auto;
 }

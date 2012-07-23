@@ -22,8 +22,8 @@
 	</select>
     </div>
 	<div class="col">
-		<label for="large_mosaic">Large Mosaic </label>
 		<input type="checkbox" name="large_mosaic" value="1">
+		<label for="large_mosaic">Large Mosaic </label>
 	</div>
    
     <div class="col index-col">
