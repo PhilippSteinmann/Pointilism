@@ -7,7 +7,7 @@ use_javascript("generate_mosaic.js.php");
 if (isset($mosaic_path))
 {
 	$img = ImageManipulation::imagecreatefrom($mosaic_path);
-	MosaicGenerator::printHTMLRoundedPic($img);
+	MosaicGenerator::printCanvasMosaic($img, $cell_size);
 }
 ?>
 

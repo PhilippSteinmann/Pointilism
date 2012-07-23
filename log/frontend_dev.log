@@ -1,0 +1,42 @@
+Jul 11 15:32:47 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'pics',  'action' => 'index',)
+Jul 11 15:32:48 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jul 11 15:32:48 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jul 11 15:32:48 symfony [info] {picsActions} Call "picsActions->executeIndex()"
+Jul 11 15:32:48 symfony [info] {sfPHPView} Render "/var/www/symfony/apps/frontend/modules/pics/templates/indexSuccess.php"
+Jul 11 15:32:48 symfony [info] {sfPHPView} Decorate content with "/var/www/symfony/apps/frontend/templates/layout.php"
+Jul 11 15:32:48 symfony [info] {sfPHPView} Render "/var/www/symfony/apps/frontend/templates/layout.php"
+Jul 11 15:32:48 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jul 11 15:32:48 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jul 11 15:32:48 symfony [info] {sfWebDebugLogger} Configuration 1650.06 ms (9)
+Jul 11 15:32:48 symfony [info] {sfWebDebugLogger} Factories 1583.92 ms (1)
+Jul 11 15:32:48 symfony [info] {sfWebDebugLogger} Action "pics/index" 0.23 ms (1)
+Jul 11 15:32:48 symfony [info] {sfWebDebugLogger} View "Success" for "pics/index" 309.93 ms (1)
+Jul 11 15:32:48 symfony [info] {sfWebResponse} Send content (25940 o)
+Jul 18 12:58:46 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'pics',  'action' => 'index',)
+Jul 18 12:58:46 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jul 18 12:58:46 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jul 18 12:58:46 symfony [info] {picsActions} Call "picsActions->executeIndex()"
+Jul 18 12:58:46 symfony [info] {sfPHPView} Render "/var/www/symfony/apps/frontend/modules/pics/templates/indexSuccess.php"
+Jul 18 12:58:46 symfony [info] {sfPHPView} Decorate content with "/var/www/symfony/apps/frontend/templates/layout.php"
+Jul 18 12:58:46 symfony [info] {sfPHPView} Render "/var/www/symfony/apps/frontend/templates/layout.php"
+Jul 18 12:58:46 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jul 18 12:58:46 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jul 18 12:58:46 symfony [info] {sfWebDebugLogger} Configuration 1002.37 ms (9)
+Jul 18 12:58:46 symfony [info] {sfWebDebugLogger} Factories 843.00 ms (1)
+Jul 18 12:58:46 symfony [info] {sfWebDebugLogger} Action "pics/index" 0.31 ms (1)
+Jul 18 12:58:46 symfony [info] {sfWebDebugLogger} View "Success" for "pics/index" 133.07 ms (1)
+Jul 18 12:58:46 symfony [info] {sfWebResponse} Send content (27254 o)
+Jul 18 12:59:57 symfony [info] {sfPatternRouting} Match route "homepage" (/) for / with parameters array (  'module' => 'pics',  'action' => 'index',)
+Jul 18 12:59:57 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Jul 18 12:59:57 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Jul 18 12:59:57 symfony [info] {picsActions} Call "picsActions->executeIndex()"
+Jul 18 12:59:57 symfony [info] {sfPHPView} Render "/var/www/symfony/apps/frontend/modules/pics/templates/indexSuccess.php"
+Jul 18 12:59:57 symfony [info] {sfPHPView} Decorate content with "/var/www/symfony/apps/frontend/templates/layout.php"
+Jul 18 12:59:57 symfony [info] {sfPHPView} Render "/var/www/symfony/apps/frontend/templates/layout.php"
+Jul 18 12:59:57 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Jul 18 12:59:57 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Jul 18 12:59:57 symfony [info] {sfWebDebugLogger} Configuration 31.85 ms (9)
+Jul 18 12:59:57 symfony [info] {sfWebDebugLogger} Factories 328.90 ms (1)
+Jul 18 12:59:57 symfony [info] {sfWebDebugLogger} Action "pics/index" 9.79 ms (1)
+Jul 18 12:59:57 symfony [info] {sfWebDebugLogger} View "Success" for "pics/index" 93.37 ms (1)
+Jul 18 12:59:57 symfony [info] {sfWebResponse} Send content (27249 o)

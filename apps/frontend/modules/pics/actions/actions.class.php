@@ -52,23 +52,24 @@ class picsActions extends sfActions
 		$img_ratio = $img_height / $img_width;
 	  
 		$user_width = $request->getPostParameter("size");  
-		$output_widths = array("small"=>40, "medium"=>80, "large"=>120);
-		if (array_key_exists($user_width, $output_widths))
+		$cell_sizes = array("small"=>5, "medium"=>10, "large"=>30);
+		if (array_key_exists($user_width, $cell_sizes))
 		{
-			$output_width = $output_widths[$user_width];
+			$cell_size = $cell_sizes[$user_width];
 		}
 		else
 		{
-			$output_width = $output_widths["medium"];
+			$cell_size = $cell_sizes["medium"];
 		}
 		
-		$output_height = ceil($output_width * $img_ratio);
+		$mosaic_w = 700;
+		$mosaic_h = ceil($mosaic_h * $img_ratio);
 		
 		$size_arr = getimagesize($img_path);
-		ImageManipulation::resize_image($img_path, $img, $size_arr, $output_width, $output_height);
-		var_dump(getimagesize($img_path));
+		ImageManipulation::resize_image($img_path, $img, $size_arr, $mosaic_w, $mosaic_h);
 	
 		$this->getUser()->setAttribute("img_path", $img_path);
+		$this->getUser()->setAttribute("cell_size", $cell_size);
       }
 	  
 	  $this->redirect("/view");
@@ -77,9 +78,11 @@ class picsActions extends sfActions
   public function executeView(sfWebRequest $request)
   {
 	$mosaic_path = $this->getUser()->getAttribute("img_path");
-	if ($mosaic_path)
+	$cell_size = $this->getUser()->getAttribute("cell_size");
+	if ($mosaic_path && $cell_size)
 	{
 		$this->mosaic_path = $mosaic_path;
+		$this->cell_size = $cell_size;
 	}
 	else
 	{

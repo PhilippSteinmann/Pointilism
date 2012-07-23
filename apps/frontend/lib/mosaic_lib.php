@@ -51,7 +51,7 @@ class MosaicGenerator
   
 	} //end function
 	
-	public static function printHTMLPic($img) 
+	public static function printHTMLMosaic($img) 
 	{
 		$imagew = imagesx($img);
 		$imageh = imagesy($img);
@@ -81,11 +81,11 @@ class MosaicGenerator
 		} // end y loop
 	} //end function printHTMLPic
 
-	function printHTMLRoundedPic($img) 
+	public static function printHTMLRoundedMosaic($img) 
 	{
 		$imagew = imagesx($img);
 		$imageh = imagesy($img);
-		echo "<div style='width: ". 15*$imagew . "px'>";
+		echo "<div >";
 		for ($y = 0; $y < $imageh; $y++) 
 		{
 			for ($x = 0; $x < $imagew; $x++) 
@@ -103,5 +103,45 @@ class MosaicGenerator
 		} // end y loop
 		echo "</div>";
 	} //end function printHTMLRoundedPic
+	
+	public static function printCanvasMosaic($img, $cell_size)
+	{
+		$imagew = imagesx($img);
+		$imageh = imagesy($img);
+		
+		$mosaic_width = $imagew * $cell_size;
+		$mosaic_height = $imageh * $cell_size;
+		echo "<canvas width='$mosaic_width"."px' height='$mosaic_height"."px'> </canvas>";
+		echo "
+		<script>
+		var canvas = document.querySelector('canvas');
+		var ctx = canvas.getContext('2d')				
+		";
+		for ($y = 0; $y < $imageh; $y++) 
+		{
+			for ($x = 0; $x < $imagew; $x++) 
+			{
+				$rgb = imagecolorat($img, $x, $y);
+				$r = ($rgb >> 16) & 0xFF;
+				$g = ($rgb >> 8) & 0xFF;
+				$b = $rgb & 0xFF;
+				// converting decimal rgb into hex
+				$pos_x = $x * $cell_size;
+				$pos_y = $y * $cell_size;
+				
+				$css_color = str_pad(dechex($r), 2, "0", STR_PAD_LEFT).str_pad(dechex($g), 2, "0", STR_PAD_LEFT).str_pad(dechex($b), 2, "0", STR_PAD_LEFT); //convert rgb into css
+				echo MosaicGenerator::drawRect("ctx", $css_color, $pos_x, $pos_y, $cell_size, $cell_size);
+			}
+		}
+		echo "</script>";
+	}
+	
+	public static function drawRect($ctx="ctx", $color, $x, $y, $width, $height)
+	{
+		return "
+		$ctx.fillStyle='#$color';
+		$ctx.fillRect($x, $y, $width, $height)
+		"; 
+	}
 }
 ?>

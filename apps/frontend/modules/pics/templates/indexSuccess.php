@@ -10,16 +10,9 @@
     <div class="col">
         <input type="file" name="image" size="20" id="image">
     </div>
-    
+	
     <div class="col index-col">
-        <p>Keywords for images: </p>
-    </div>
-    <div class="col">
-        <input type="text" name="keywords">
-    </div>
-
-    <div class="col index-col">
-        <p>Size of each image: </p>
+        <p>Size of Mosaic: </p>
     </div>
     <div class="col">
         <select name="size">
@@ -28,6 +21,18 @@
 			<option value="large">Large </option>
 	</select>
     </div>
+	<div class="col">
+		<label for="large_mosaic">Large Mosaic </label>
+		<input type="checkbox" name="large_mosaic" value="1">
+	</div>
+   
+    <div class="col index-col">
+        <p>Keywords for images: </p>
+    </div>
+    <div class="col">
+        <input type="text" name="keywords">
+    </div>
+
     <br> <br> <br> <br>
     <input type="submit" value="Create Mosaic!" class="submit-creation">
 	<p class="error"> </p>
