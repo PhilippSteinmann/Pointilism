@@ -9,18 +9,23 @@
 <body>
     <header>
         <h1 class="logo">
-			<a href="/">
-				POINTILISM
-			</a>
+			<div class="vertical-align">
+				<a href="/">
+					POINTILISM
+				</a>
+			</div>	
 		</h1>
 	
 		<nav>
-			<ul>
-				<li><a href="/">Create</a> </li>
-				<li><a href="/view">View </a> </li>
-				<li><a href="/about">About </a> </li>
-			</ul>
-
+			<div class="vertical-align">
+				<ul>
+					<li><a href="/">Create</a> </li>
+					<li><a> ~ </a></li>
+					<li><a href="/view">View </a> </li>
+					<li><a> ~ </a></li>
+					<li><a href="/about">About </a> </li>
+				</ul>
+			</div>
 		</nav>
     </header>
     <div id="content">

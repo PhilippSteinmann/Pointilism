@@ -13,43 +13,66 @@ p, input, select, label
 header
 {
     margin: 0;
-    padding: 0 4px;
-    height: 52px;
+    padding: 0;
+    height: 150px;
     width: 100%;
-    position: fixed;
+    position: relative;
  
-    background-color: rgb(170,0,40);
+    background-color: rgb(90,0,50);
 }
 
 header .logo
 {
+	float: left;
+	position: relative;
+	
     margin-top: 0;
     margin-bottom: 0;
-    margin-left: 5px;
-    float: left;
+    margin-left: 20px;
+	margin-right: 0;
+	
+	width: 300px;
+	height: 100%;
 
-    font: 38px georgia, serif;
+    font: 50px/1 georgia, serif;
+}
+
+header .logo .vertical-align
+{
+	position: absolute;
+	top: 50px;
 }
 
 header .logo a
 {
-    text-decoration: none;
-    color: white;
+	text-decoration: none;
+    color: rgb(230,230,230);
 }
 
 header .logo a:hover
 {
-    border-bottom: 1px solid white;
+    border-bottom: 1px dashed white;
 }
 
 header nav
 {
-    float: left;
-    margin-left: 30px;
+	position: relative;
+	float: left;
+    
+	margin-left: 70px;
+	height: 100%;
+}
+
+header nav .vertical-align
+{
+	position: absolute;
+	top: 51px; /* 150 / 2 = 75 = half-height of container. 24 + 12 +12 = 48 = height of content */
 }
     
 header nav ul
-{
+{	
+	height: 100%;
+	width: 400px;
     margin: 0;
     padding: 0;
 
@@ -58,22 +81,20 @@ header nav ul
 
 header nav li
 {
-    position: relative;
+    float: left;
     display: block;
+	
     margin-left: 0;
     margin-right: 15px;
-    float: left;
-    height: 52px; /*Height of header */
 }
 
 header nav li a
-{
-    margin-bottom: -12px;
-    display: block;
+{	
     padding: 12px 2px;
-
-    color: white;
-    font: 22px georgia, serif;
+	display: block;
+    
+	color: rgb(230,230,230);
+    font: 24px/1 georgia, serif;
     text-decoration: none;
 
     transition: 0.2s background-color;
@@ -89,7 +110,7 @@ header nav li a:hover
 #content
 {
     position: absolute;
-    top: 52px;
+    top: 150px;
 	left: 0;
 	right: 0;
 	

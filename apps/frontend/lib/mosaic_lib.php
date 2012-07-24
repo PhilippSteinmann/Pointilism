@@ -130,18 +130,37 @@ class MosaicGenerator
 				$pos_y = $y * $cell_size;
 				
 				$css_color = str_pad(dechex($r), 2, "0", STR_PAD_LEFT).str_pad(dechex($g), 2, "0", STR_PAD_LEFT).str_pad(dechex($b), 2, "0", STR_PAD_LEFT); //convert rgb into css
-				echo MosaicGenerator::drawRect("ctx", $css_color, $pos_x, $pos_y, $cell_size, $cell_size);
+				$rounded_color = MosaicGenerator::roundHex($css_color);
+				//echo MosaicGenerator::drawRect($rounded_color, $pos_x, $pos_y, $cell_size, $cell_size);
+				echo MosaicGenerator::drawImageFromCache($rounded_color, $pos_x, $pos_y, $cell_size, $cell_size); 
 			}
 		}
 		echo "</script>";
 	}
 	
-	public static function drawRect($ctx="ctx", $color, $x, $y, $width, $height)
+	public static function drawRect($color, $x, $y, $width, $height, $ctx="ctx")
 	{
 		return "
-		$ctx.fillStyle='#$color';
+		var color = getGoogleColor('$color');
+		$ctx.fillStyle = color;
 		$ctx.fillRect($x, $y, $width, $height)
 		"; 
+	}
+	
+	public static function drawImageFromCache($color, $x, $y, $width, $height, $ctx="ctx")
+	{
+		$img = "img" . $x . $y;
+		return "
+		var color = getGoogleColor('$color');
+		var random_number = Math.floor(Math.random()*all_images_by_color[color].length);
+		var result = all_images_by_color[color][random_number];
+			
+		$img = new Image();
+		$img.src = result;
+		$img.onload = function() {
+			ctx.drawImage($img, $x, $y, $width, $height);
+		};
+		";
 	}
 }
 ?>

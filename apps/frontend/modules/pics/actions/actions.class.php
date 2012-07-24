@@ -52,7 +52,7 @@ class picsActions extends sfActions
 		$img_ratio = $img_height / $img_width;
 	  
 		$user_width = $request->getPostParameter("size");  
-		$cell_sizes = array("small"=>5, "medium"=>10, "large"=>30);
+		$cell_sizes = array("small"=>5, "medium"=>15, "large"=>40);
 		if (array_key_exists($user_width, $cell_sizes))
 		{
 			$cell_size = $cell_sizes[$user_width];
