@@ -19,10 +19,10 @@
 			<option value="small">Small </option>
 			<option selected value="medium">Medium </option>
 			<option value="large">Large </option>
-	</select>
+		</select>
     </div>
 	<div class="col">
-		<input type="checkbox" name="large_mosaic" value="1">
+		<input type="checkbox" id="large_mosaic" name="large_mosaic" value="1">
 		<label for="large_mosaic">Large Mosaic </label>
 	</div>
    
@@ -34,7 +34,7 @@
     </div>
 
     <br> <br> <br> <br>
-    <input type="submit" value="Create Mosaic!" class="submit-creation">
+    <input type="submit" value="Create Mosaic" class="submit-creation">
 	<p class="error"> </p>
     <input type="hidden" name="generate" value="1">
  

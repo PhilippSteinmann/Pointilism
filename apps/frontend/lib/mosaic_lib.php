@@ -106,19 +106,21 @@ class MosaicGenerator
 	
 	public static function printCanvasMosaic($img, $cell_size)
 	{
-		$imagew = imagesx($img);
+		$imagew = imagesx($img); //Get image width, height.
 		$imageh = imagesy($img);
 		
-		$mosaic_width = $imagew * $cell_size;
+		$mosaic_width = $imagew * $cell_size; //See generateSuccess() in actions.class.php, where $image_w = $mosaic_w / $cell_size.
 		$mosaic_height = $imageh * $cell_size;
-		echo "<canvas width='$mosaic_width"."px' height='$mosaic_height"."px'> </canvas>";
-		echo "
+		echo "<canvas width='$mosaic_width"."px' height='$mosaic_height"."px'> </canvas> 
 		<script>
 		var canvas = document.querySelector('canvas');
 		var ctx = canvas.getContext('2d')				
-		";
+		"; //These two variables are available globally.
+
+		$mosaic_array = array(); //We'll now create a matrix of rows and columns of images.
 		for ($y = 0; $y < $imageh; $y++) 
 		{
+			$moisac_array[$y] = array();
 			for ($x = 0; $x < $imagew; $x++) 
 			{
 				$rgb = imagecolorat($img, $x, $y);
@@ -131,11 +133,15 @@ class MosaicGenerator
 				
 				$css_color = str_pad(dechex($r), 2, "0", STR_PAD_LEFT).str_pad(dechex($g), 2, "0", STR_PAD_LEFT).str_pad(dechex($b), 2, "0", STR_PAD_LEFT); //convert rgb into css
 				$rounded_color = MosaicGenerator::roundHex($css_color);
-				//echo MosaicGenerator::drawRect($rounded_color, $pos_x, $pos_y, $cell_size, $cell_size);
-				echo MosaicGenerator::drawImageFromCache($rounded_color, $pos_x, $pos_y, $cell_size, $cell_size); 
+
+				$mosaic_array[$y][$x] = $rounded_color;
+				//echo MosaicGenerator::drawImageFromCache($rounded_color, $pos_x, $pos_y, $cell_size, $cell_size); 
 			}
 		}
-		echo "</script>";
+				echo "
+				var mosaic_array = " . json_encode($mosaic_array) . "
+				var cell_size = " . $cell_size . "
+				</script>";
 	}
 	
 	public static function drawRect($color, $x, $y, $width, $height, $ctx="ctx")
@@ -152,10 +158,8 @@ class MosaicGenerator
 		$img = "img" . $x . $y;
 		return "
 		var color = getGoogleColor('$color');
-		var random_number = Math.floor(Math.random()*all_images_by_color[color].length);
-		var result = all_images_by_color[color][random_number];
-			
 		$img = new Image();
+					
 		$img.src = result;
 		$img.onload = function() {
 			ctx.drawImage($img, $x, $y, $width, $height);

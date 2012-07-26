@@ -5,9 +5,16 @@ body
 
 p, input, select, label
 {
-    font: 18px arial, sans-serif;
+    font: 18px georgia, serif;
     color: rgb(70,70,70);
     line-height: 30px;
+}
+
+.no-effect:hover
+{
+	border: inherit;
+	background-color: inherit;
+	text-decoration: inherit;
 }
 
 header
@@ -51,7 +58,7 @@ header .logo a
 
 header .logo a:hover
 {
-    border-bottom: 1px dashed white;
+    border-bottom: 1px dashed rgb(230,230,230);
 }
 
 header nav
@@ -116,6 +123,8 @@ header nav li a:hover
 	
     padding-top: 20px;
     padding-left: 30px;
+	
+	background-color: rgb(235,235,235);
 }
 
 #content h2
@@ -124,7 +133,7 @@ header nav li a:hover
     margin-top: 0;
 	    
     font: 62px georgia, serif;
-    color: rgb(170,0,40);
+    color: rgb(130,0,70);
 }
 
 #content .col
@@ -152,17 +161,19 @@ header nav li a:hover
     padding: 4px;
     font-size: 16px;
 	line-height: normal;
+	font-style: italic;
 }
 
 #content .col input[type=text]:focus
 {
-    border: 1px solid rgb(205,87,40);
+    border: 1px solid rgb(160,0,100);
     outline: none;
 }
 
 #content .col select
 {
 	border: 1px solid rgb(170,170,170);
+	font-style: italic;
 }
 
 #content .col label
@@ -176,12 +187,12 @@ header nav li a:hover
 	display: none;
 	float: left;	
 	position: relative;
-	top: -5px;	
+	top: -14px;	
 	
 	margin-left: 40px;
 	
 	font-weight: bold;
-	color: rgb(110,110,110);
+	color: rgb(90,90,90);
 }
 
 #content .submit-creation
@@ -189,14 +200,24 @@ header nav li a:hover
     clear: both;
     display: block;
 	float: left;
+	position: relative;
 	
-    padding: 7px;
+    padding: 0;
+	margin-bottom: 20px;
+	cursor: pointer;
 
     font-family: georgia, serif;
+	font-style: italic;
+	border: none;
+	outline: none;
+	background-color: transparent;
+	color: black;
+	/*
     color: white;
     border: 2px solid white;
     outline: 1px solid rgb(170,0,40);
     background-color: rgb(170,0,40);
+	*/
     
 /*    transition: 1.5s padding, 1.5s transform, 1.5s font-size;
     -webkit-transition: 1.5s padding, 1.5s -webkit-transform, 1.5s font-size;
@@ -206,8 +227,12 @@ header nav li a:hover
 
 #content .submit-creation:hover
 {
-    cursor: pointer;
-    background-color: rgb(220,0,80);
+    border-bottom: 1px dotted black;
+}
+
+#content .submit-creation:active
+{
+	top: 2px;
 }
 
 .color_cell
@@ -219,9 +244,24 @@ header nav li a:hover
 	background-position:center;
 }
 
-canvas
+#content .tweak-size, canvas
 {
-	display: block;
-	
-	margin: 0 auto;
+	float: left;
+}
+
+#content .tweak-size
+{
+	margin-left: 20px;
+	line-height: normal;
+}
+
+#content .tweak-size input
+{
+	line-height: normal;
+	width: 50px;	
+}
+
+#content .tweak-size p
+{
+	display: inline;
 }

@@ -20,9 +20,9 @@
 			<div class="vertical-align">
 				<ul>
 					<li><a href="/">Create</a> </li>
-					<li><a> ~ </a></li>
+					<li><a class="no-effect"> ~ </a></li>
 					<li><a href="/view">View </a> </li>
-					<li><a> ~ </a></li>
+					<li><a class="no-effect"> ~ </a></li>
 					<li><a href="/about">About </a> </li>
 				</ul>
 			</div>

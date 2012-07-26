@@ -5,6 +5,29 @@
       return colors[target_color];
     }
   }
+
+function getRandomImageFromCache(google_color)
+{
+  var random_number = Math.floor(Math.random()*all_images_by_color[google_color].length);
+  var result = all_images_by_color[google_color][random_number];
+  return result;
+}
+
+function arrayLength(arr) //For multi-dimensional arrays.
+{
+    var length = 0;
+    for (var item in arr)
+    {
+        length++;
+        if (arr[item] instanceof Array)
+        {
+          length += arrayLength(arr[item]); //Recursive!
+        }
+    }
+    return length;
+}
+
+
   google.load('search', '1');
   var imageSearch;
   var selected_color = "";
@@ -19,14 +42,7 @@
       $.each(results, function(index, value) { 
         $("#image_search").html($("#image_search").html()+", \""+value.tbUrl+"\"");
       });      
-/*
-      var random_number = 0;
-      $("."+selected_color).each(function() {
-        random_number = Math.floor(Math.random()*results.length);
-        var result = results[random_number];
-        $(this).css("background-image", "url('"+result.tbUrl+"')");
-      });
-*/
+
     }
   }
 
@@ -102,41 +118,38 @@
 
   } //end of function
 
-  var used_colors = {};
-    
-  $(".cell_test").click(function(){
-    $("#hex_refine").html($("#hex_refine").html()+" "+$(this).attr("hex"));
-    $("#swatch").css('backgroundColor',$(this).attr("hex"));
-    
-    //change clicked cell to white and unbind
-    $(this).css({'background-color':'white'});
-    $(this).unbind('click');
-  });
-  
-  $(document).ready(function() {
-    // SETS ALL COLOR CELLS TO THE GOOGLE COLOR
-    <?php
-      if(isset($_REQUEST['effect_option']) && $_REQUEST['effect_option'] != 'no_color') {
-    ?>
-      $(".color_cell").each( function() {
-        google_color = getGoogleColor($(this).attr('hex'));
-        used_colors[google_color] = 1;
-        $(this).css("background-color", google_color);
-        $(this).addClass(google_color);
-      });
-    <?php
-      }  //end if
-    ?>
-    selected_color = "purple";
-    // setImage(selected_color); 
-    <?php
-      if(isset($_REQUEST['effect_option']) && $_REQUEST['effect_option'] != 'no_images') {
-    ?>
-    $.each(used_colors, function(index, value) {
-      selected_color = index;
-      setImageFromCache(selected_color); 
-    });  
-    <?php
-      }  //end if
-    ?>
-  });
+
+    //see http://stackoverflow.com/a/4800250/805556. Not my question. Prevents images from loading on top o' each other.
+    alert(arrayLength(mosaic_array));
+    var imgs = [];
+    var loaded = 0;
+    var loadCallBack = function ()
+    {
+      loaded++;
+      if (loaded == arrayLength(mosaic_array))
+      {
+        for (var y in imgs)
+        {
+          for (var x in imgs[y])
+          {
+            var pos_y = y * cell_size;
+            var pos_x = x * cell_size;
+
+            ctx.drawImage(imgs[y][x], pos_x, pos_y, cell_size, cell_size);
+          }
+        } 
+      }
+    }
+    for (var y in mosaic_array)
+    {
+      for (var x in mosaic_array[y])
+      {
+        var css_color = mosaic_array[y][x]; 
+        var google_color = getGoogleColor(css_color);
+        var image_url = getRandomImageFromCache(google_color);
+        alert(y + "|" + x);
+        imgs[y][x] = new Image(); //Images are identified by their coords.
+        imgs[y][x].addEventListener('load', loadCallBack, false);
+        imgs[y][x].src = image_url;
+      }
+    }
