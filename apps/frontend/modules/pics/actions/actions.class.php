@@ -74,9 +74,16 @@ class picsActions extends sfActions
 		
 		$size_arr = getimagesize($img_path); //getimagesize() gets size from path; imagesx() gets size from Image object.
 		ImageManipulation::resize_image($img_path, $img, $size_arr, $image_w, $image_h); //See lib/image_lib.php. No returns, resizes image.
+
+		$keywords = $request->getPostParameter("keywords");
+		if (empty($keywords))
+		{
+			$keywords = "";
+		}		
 	
 		$this->getUser()->setAttribute("img_path", $img_path); //Set Session variable. That way, if user refreshes, mosaic is still there.
 		$this->getUser()->setAttribute("cell_size", $cell_size); //Same for cell sizes.
+		$this->getUser()->setAttribute("keywords", $keywords); //Same for key
       }
 	  
 	  $this->redirect("/view"); //on to view!
@@ -86,10 +93,12 @@ class picsActions extends sfActions
   {
 	$mosaic_path = $this->getUser()->getAttribute("img_path"); //retrieve values from executeGenerate()
 	$cell_size = $this->getUser()->getAttribute("cell_size");
+	$keywords = $this->getUser()->getAttribute("keywords");
 	if ($mosaic_path && $cell_size)
 	{
 		$this->mosaic_path = $mosaic_path; //Set as attribute for use in viewSuccess.php.
 		$this->cell_size = $cell_size;
+		$this->keywords = $keywords;
 	}
 	else
 	{

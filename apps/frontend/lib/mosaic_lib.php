@@ -104,7 +104,7 @@ class MosaicGenerator
 		echo "</div>";
 	} //end function printHTMLRoundedPic
 	
-	public static function printCanvasMosaic($img, $cell_size)
+	public static function printCanvasMosaic($img, $cell_size, $keywords)
 	{
 		$imagew = imagesx($img); //Get image width, height.
 		$imageh = imagesy($img);
@@ -139,9 +139,10 @@ class MosaicGenerator
 			}
 		}
 				echo "
-				var mosaic_array = " . json_encode($mosaic_array) . "
-				var cell_size = " . $cell_size . "
-				</script>"; //We pass the color matrix and the size of each image to Javascript as variables.
+				var mosaic_array = " . json_encode($mosaic_array) . ";
+				var cell_size = " . $cell_size . ";
+				var search_keywords = '" . $keywords . "';
+				</script>"; //We pass the color matrix, the size of each image, and the keywords to Javascript as variables.
 	}
 	
 	public static function drawRect($color, $x, $y, $width, $height, $ctx="ctx")

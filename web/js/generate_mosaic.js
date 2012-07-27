@@ -1,4 +1,3 @@
-
 function getGoogleColor(target_color)
   {
     if (typeof colors[target_color] == "undefined") 
@@ -25,6 +24,51 @@ function getGoogleImage(color)
 function requestGoogleImages(color,num)
 {
   var searcher = new google.search.customSearchControl.getImageSearcher();
+  searcher.setRestriction(google.search.customSearchControl.getImageSearcher.RESTRICT_COLORFILTER); //Restrict by colors
+  
+  if (color == "blue") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_BLUE);
+  } 
+
+  else if (color == "red") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_RED);
+  }
+
+  else if(color == "brown") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_BROWN);
+  } 
+
+  else if (color == "gray") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_GRAY);
+  } 
+  else if (color == "green") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_GREEN);
+  } 
+  else if (color == "orange") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_ORANGE);
+  }
+  else if (color == "teal") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_TEAL);
+  }
+  else if (color == "yellow") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_YELLOW);
+  }
+  else if (color == "black") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_BLACK);
+  }
+  else if (color == "pink") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_PINK);
+  }
+  else if (color == "purple") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_PURPLE);
+  }
+  else if (color == "white") {
+    searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_WHITE);
+  }
+  searcher.setRestriction(google.search.customSearchControl.getImageSearcher.COLOR_
+  );
+
+  searcher.execute(search_keywords);
 }
 
 /*
@@ -114,9 +158,11 @@ function setImageHelper()
 }
 */
 
+$(document).ready(
+function() 
+{
   var images = {}; //Where the mosaic tiles will get their images from.
   google.load('search', '1', {language : 'en'});
-
   //see http://stackoverflow.com/a/4800250/805556. Prevents images from loading on top o' each other.
   var imgs = [];
   var loaded = 0;
@@ -139,18 +185,19 @@ function setImageHelper()
   }
   //Iterate through the matrix of google colors
   for (var y in mosaic_array)
-  {
-    if (typeof imgs[y] == "undefined") //We need to explicitly define an array the first time.
-    {
-        imgs[y] = [];
-    }
-    for (var x in mosaic_array[y])
-    {
-      var hex_color = mosaic_array[y][x]; //The hex color returned by lib/mosaic_lib.php
-      var google_color = getGoogleColor(hex_color);
-      var image_url = getGoogleImage(google_color);  
-      imgs[y][x] = new Image(); //Images are identified by their coords in this array.
-      imgs[y][x].addEventListener('load', loadCallBack, false);
-      imgs[y][x].src = image_url;
-    }
-  }
+  
+   if (typeof imgs[y] == "undefined") //We need to explicitly define an array the first time.
+   {
+     imgs[y] = [];
+   }
+   for (var x in mosaic_array[y])
+   {
+     var hex_color = mosaic_array[y][x]; //The hex color returned by lib/mosaic_lib.php
+     var google_color = getGoogleColor(hex_color);
+     var image_url = getGoogleImage(google_color);  
+     imgs[y][x] = new Image(); //Images are identified by their coords in this array.
+     imgs[y][x].addEventListener('load', loadCallBack, false);
+     imgs[y][x].src = image_url;
+   }
+}
+ 

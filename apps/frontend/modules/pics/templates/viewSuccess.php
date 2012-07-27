@@ -8,9 +8,9 @@ if (isset($mosaic_path)):?>
 
 	<?php
 		$img = ImageManipulation::imagecreatefrom($mosaic_path); //Returns Image object. 
-		MosaicGenerator::printCanvasMosaic($img, $cell_size); //Defines two Javascript variables: The color matrix and the size of each image.
+		MosaicGenerator::printCanvasMosaic($img, $cell_size, $keywords); //Defines three Javascript variables: The color matrix, the size of each image, and the keywords.
 	?>
-	<script src="/js/generate_mosaic.js"> </script> <!-- Picks up two variables from printCanvasMosaic(), creates canvas mosaic !-->
+	<script src="/js/generate_mosaic.js"> </script> <!-- Picks up three variables from printCanvasMosaic(), creates canvas mosaic !-->
 		<div class="tweak-size">
 			<p>Mosaic Size: </p>
 			<select>
