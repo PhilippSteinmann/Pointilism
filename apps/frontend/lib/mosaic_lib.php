@@ -1,53 +1,53 @@
 <?php
 class MosaicGenerator
 {
-	public static function roundHex($css_color) 
+	public static function roundHexColor($color) 
 	{
-		$css_color = strtolower($css_color);
+		$color = strtolower($color);
 		$round_up = array(8,9,'a','b','c','d','e','f','A','B','C','D','E','F');
 		$cur = 0;
-		$css_color_split = str_split($css_color); // splits the css_color function into array
+		$color_split = str_split($color); // splits the color function into array
 
-		while($cur < count($css_color_split)) 
+		while($cur < count($color_split)) 
 		{
-			if(in_array($css_color_split[$cur+1], $round_up))
+			if(in_array($color_split[$cur+1], $round_up))
 			{ // check if we should round up
 			  
-				if(is_numeric($css_color_split[$cur]))
+				if(is_numeric($color_split[$cur]))
 				{
-					$css_color_split[$cur] = $css_color_split[$cur] + 1; 
+					$color_split[$cur] = $color_split[$cur] + 1; 
 			
-					if($css_color_split[$cur] == 10)
+					if($color_split[$cur] == 10)
 					{ // catch base16 increment rule
-						$css_color_split[$cur] = "a";
+						$color_split[$cur] = "a";
 					}
 				} 
 				else 
 				{ //is not numeric
-					switch($css_color_split[$cur]) 
+					switch($color_split[$cur]) 
 					{
 						case "a": case "A":
-							$css_color_split[$cur] = "b";
+							$color_split[$cur] = "b";
 						case "b": case "B":
-							$css_color_split[$cur] = "c";
+							$color_split[$cur] = "c";
 						case "c": case "C":
-							$css_color_split[$cur] = "d";
+							$color_split[$cur] = "d";
 						case "d": case "D":
-							$css_color_split[$cur] = "e";
+							$color_split[$cur] = "e";
 						case "e": case "E":
-							$css_color_split[$cur] = "f";
+							$color_split[$cur] = "f";
 						//case "f": case "F":
-						//$css_color_split[$cur+1] = "f";
+						//$color_split[$cur+1] = "f";
 					} //end switch
 
 				} // end if else
 			} // Do not round up, so round down.
-            //if($css_color_split[$cur] != "f" || $css_color_split[$cur+1] != "f"){ // if is NOT "FF"
-		    $css_color_split[$cur+1] = 0;
+            //if($color_split[$cur] != "f" || $color_split[$cur+1] != "f"){ // if is NOT "FF"
+		    $color_split[$cur+1] = 0;
 			//} // end if
 			$cur = $cur + 2;
 		}	 // end while
-	return implode("", $css_color_split);
+	return implode("", $color_split);
   
 	} //end function
 	
@@ -117,14 +117,15 @@ class MosaicGenerator
 		var ctx = canvas.getContext('2d')				
 		"; //These two variables are available globally.
 
-		$mosaic_array = array(); //We'll now create a matrix of rows and columns of images.
-		for ($y = 0; $y < $imageh; $y++) 
+		$mosaic_array = array(); //Matrix of rows and columns of colors, which will be replaced by images.
+
+		for ($y = 0; $y < $imageh; $y++)  //Iterating through the rows of pixels...
 		{
-			$moisac_array[$y] = array();
-			for ($x = 0; $x < $imagew; $x++) 
+			$moisac_array[$y] = array(); 
+			for ($x = 0; $x < $imagew; $x++) //Iterating through the pixels in that row...
 			{
-				$rgb = imagecolorat($img, $x, $y);
-				$r = ($rgb >> 16) & 0xFF;
+				$rgb = imagecolorat($img, $x, $y); //The color at this specific pixel.
+				$r = ($rgb >> 16) & 0xFF; //Converts to RGB. I got this explained at http://stackoverflow.com/q/11570312/805556.
 				$g = ($rgb >> 8) & 0xFF;
 				$b = $rgb & 0xFF;
 				// converting decimal rgb into hex
@@ -132,16 +133,15 @@ class MosaicGenerator
 				$pos_y = $y * $cell_size;
 				
 				$css_color = str_pad(dechex($r), 2, "0", STR_PAD_LEFT).str_pad(dechex($g), 2, "0", STR_PAD_LEFT).str_pad(dechex($b), 2, "0", STR_PAD_LEFT); //convert rgb into css
-				$rounded_color = MosaicGenerator::roundHex($css_color);
+				$rounded_hex_color = MosaicGenerator::roundHexColor($css_color); //Now we round the color.
 
-				$mosaic_array[$y][$x] = $rounded_color;
-				//echo MosaicGenerator::drawImageFromCache($rounded_color, $pos_x, $pos_y, $cell_size, $cell_size); 
+				$mosaic_array[$y][$x] = $rounded_hex_color; //And add this rounded color to our matrix of pixels.
 			}
 		}
 				echo "
 				var mosaic_array = " . json_encode($mosaic_array) . "
 				var cell_size = " . $cell_size . "
-				</script>";
+				</script>"; //We pass the color matrix and the size of each image to Javascript as variables.
 	}
 	
 	public static function drawRect($color, $x, $y, $width, $height, $ctx="ctx")
@@ -167,4 +167,4 @@ class MosaicGenerator
 		";
 	}
 }
-?>
+?>`

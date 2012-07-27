@@ -24,4 +24,28 @@ function()
 		$(".tweak-size #width").val(new_width);
 		$(".tweak-size #height").html(new_height);
 	} );
+
+
+
+	Array.prototype.absolute_length = function () //For multi-dimensional arrays.
+	{
+    	var length = 0;
+    	for (var item in this)
+    	{
+    		if (this.hasOwnProperty(item))
+    		{
+        		length++; //Another item in the array.
+        		if (this[item] instanceof Array) //If this item is array...
+        		{
+          			length += this[item].absolute_length(); //...we go recursive!
+        		}
+        	}
+    	}
+    	return length;
+	}
+
+	Array.prototype.randomValue = function() 
+	{
+		return this[Math.floor(Math.random() * this.length)]
+	}
 } );

@@ -7,10 +7,10 @@ if (isset($mosaic_path)):?>
 	<div class="mosaic-wrapper">
 
 	<?php
-		$img = ImageManipulation::imagecreatefrom($mosaic_path);
-		MosaicGenerator::printCanvasMosaic($img, $cell_size);
-		use_javascript("generate_mosaic.js");
+		$img = ImageManipulation::imagecreatefrom($mosaic_path); //Returns Image object. 
+		MosaicGenerator::printCanvasMosaic($img, $cell_size); //Defines two Javascript variables: The color matrix and the size of each image.
 	?>
+	<script src="/js/generate_mosaic.js"> </script> <!-- Picks up two variables from printCanvasMosaic(), creates canvas mosaic !-->
 		<div class="tweak-size">
 			<p>Mosaic Size: </p>
 			<select>
@@ -28,8 +28,3 @@ if (isset($mosaic_path)):?>
 
 <div id="hex_refine" style="font-size: 12px"></div>
 <div id="image_search" style="font-size: 12px"></div>
-
-
-
-<open> </open>
-<open> </open>
