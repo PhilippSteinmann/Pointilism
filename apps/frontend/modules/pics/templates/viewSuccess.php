@@ -1,5 +1,5 @@
 <?php
-use_javascript("https://www.google.com/jsapi?key=ABQIAAAA9ozePzao9mxP4UicD1QqkxT2yXp_ZAY8_ufC3CFXhHIE1NvwkxSmcL65R52kgKAmzJkkFA7XHTZTTw");
+use_javascript("https://www.google.com/jsapi?key=AIzaSyALc9l8tOL3WZiGQ1Av3CsLsJdZyt477KA"); //See https://code.google.com/apis/console/#project:326513611386:overview
 use_javascript("formatted_colors.js");
 use_javascript("google_images.js");
 

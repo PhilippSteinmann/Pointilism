@@ -83,7 +83,6 @@ header nav ul
     margin: 0;
     padding: 0;
 
-    list-style-type: none;
 }
 
 header nav li
@@ -93,6 +92,8 @@ header nav li
 	
     margin-left: 0;
     margin-right: 15px;
+    
+    list-style-type: none;
 }
 
 header nav li a
@@ -265,3 +266,43 @@ header nav li a:hover
 {
 	display: inline;
 }
+
+@media all and (max-width: 768px)
+{
+	header
+	{
+		height: 100px;
+	}
+
+	header .logo
+	{
+		width: 240px;
+		
+		font-size: 36px;
+	}			
+
+	header .logo .vertical-align
+	{
+		top: 32px;
+	}
+
+	header nav 
+	{
+		margin-left: 10px;
+	}
+
+	header nav .vertical-align
+	{
+		top: 26px;	
+	}
+
+	header nav li a
+	{
+		font-size: 20px;
+	}
+
+	#content
+	{
+		top: 100px;
+	}
+} 

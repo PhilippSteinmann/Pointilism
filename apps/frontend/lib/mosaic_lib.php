@@ -109,13 +109,13 @@ class MosaicGenerator
 		$imagew = imagesx($img); //Get image width, height.
 		$imageh = imagesy($img);
 		
-		$mosaic_width = $imagew * $cell_size; //See generateSuccess() in actions.class.php, where $image_w = $mosaic_w / $cell_size.
+		$mosaic_width = $imagew * $cell_size; //See generateSuccess() in actions.class.php, where $image_w is set to $mosaic_w / $cell_size.
 		$mosaic_height = $imageh * $cell_size;
 		echo "<canvas width='$mosaic_width"."px' height='$mosaic_height"."px'> </canvas> 
 		<script>
 		var canvas = document.querySelector('canvas');
 		var ctx = canvas.getContext('2d')				
-		"; //These two variables are available globally.
+		"; //These two variables are available globally in JS.
 
 		$mosaic_array = array(); //Matrix of rows and columns of colors, which will be replaced by images.
 
@@ -129,7 +129,7 @@ class MosaicGenerator
 				$g = ($rgb >> 8) & 0xFF;
 				$b = $rgb & 0xFF;
 				// converting decimal rgb into hex
-				$pos_x = $x * $cell_size;
+				$pos_x = $x * $cell_size; //The position in the canvas.
 				$pos_y = $y * $cell_size;
 				
 				$css_color = str_pad(dechex($r), 2, "0", STR_PAD_LEFT).str_pad(dechex($g), 2, "0", STR_PAD_LEFT).str_pad(dechex($b), 2, "0", STR_PAD_LEFT); //convert rgb into css
@@ -142,7 +142,7 @@ class MosaicGenerator
 				var mosaic_array = " . json_encode($mosaic_array) . ";
 				var cell_size = " . $cell_size . ";
 				var search_keywords = '" . $keywords . "';
-				</script>"; //We pass the color matrix, the size of each image, and the keywords to Javascript as variables.
+				</script>"; //We pass the color matrix, the size of each image, and the keywords to Javascript as global vars.
 	}
 	
 	public static function drawRect($color, $x, $y, $width, $height, $ctx="ctx")

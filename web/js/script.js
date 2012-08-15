@@ -1,8 +1,4 @@
-document.createElement("nav");
-
-$(document).ready(
-function()
-{
+	document.createElement("nav");
 	$("#upload-pic").submit(
 	function()
 	{
@@ -48,4 +44,3 @@ function()
 	{
 		return this[Math.floor(Math.random() * this.length)]
 	}
-} );
