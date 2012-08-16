@@ -1,4 +1,14 @@
 /*
+  Project Status:
+  - Decided to use deprecated search.
+  - Current microwork is using SetTimeout until Google images arrive in getGoogleImage()
+  _____________________________________________________
+  - google.search.CustomSearchControl does not seem to work, method getImageSearcher() is undefined
+  - JSAPI Docs at https://developers.google.com/custom-search/v1/overview
+  */
+
+
+/*
 function getRandomImageFromCache(google_color)
 {
   var random_number = Math.floor(Math.random()*all_images_by_color[google_color].length);
@@ -6,7 +16,7 @@ function getRandomImageFromCache(google_color)
   return result;
 }
 
-  function getRandomGoogleImage(color) 
+  function getRandomImage(color) 
   { 
      // Create an Image Search instance.
     imageSearch = new google.search.ImageSearch();
@@ -83,10 +93,28 @@ function setImageHelper()
       } );      
   }
 }
+
+function getGoogleImage(color)
+{
+  if (typeof images_by_color[color] === "undefined") //If we didn't pull images for this color yet, do it now.
+  {
+    images_by_color[color] = "add"; //Arbitrary marker used so that callback func knows where to place images
+    requestGoogleImages(color,4); //Second param is number to pull. Callback func adds images to images_by_color.
+  }
+
+ image_url = getRandomImage(color);
+ while (image_url == "add")
+ {
+    image_url = getRandomImage(color);
+ }
+
+  return image_url; 
+}
+
 */
 
 function getGoogleColor(target_color)
-  {
+{
     if (typeof colors[target_color] == "undefined") 
     { // not found
       return "white"; // default color
@@ -95,82 +123,103 @@ function getGoogleColor(target_color)
     {
       return colors[target_color];
     }
-  }
-
-function getGoogleImage(color, images_by_color)
-{
-  if (typeof images_by_color[color] === "undefined") //If we didn't pull images for this color yet, do it now.
-  {
-    var google_images = requestGoogleImages(color,4); //Second param is number pulled.
-    images_by_color[color] = google_images; //Add the pulled images to the object. Note that images_by_color variable changes even though not returned by func;      
-  }
-
-  return images_by_color[color].randomValue() //Pick a random value from the image array. See js/script.js for method definition.
 }
 
-function requestGoogleImages(color,num)
+function fetchGoogleImages(google_colors, imgs_per_color)
 {
-  var searcher = new google.search.CustomSearchControl.getImageSearcher();
-  searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.RESTRICT_COLORFILTER); //Restrict by colors
-  
-  if (color == "blue") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_BLUE);
-  } 
+  $.each(google_colors, function(index,color)
+  {console.log(color)
+    requestGoogleImages(color, imgs_per_color);
+  } );
+}
 
-  /*
-  Project Status:
-  - google.search.CustomSearchControl does not seem to work, method getImageSearcher() is undefined
-  - JSAPI Docs at https://developers.google.com/custom-search/v1/overview
+
+function requestGoogleImages(color,num_images)
+{
+  /*Attention! This is deprecated! We're only using it 'cause there's no other option! Relevant Resources:
+    - https://developers.google.com/web-search/
+    - http://stackoverflow.com/q/11976747/805556
   */
-
-  else if (color == "red") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_RED);
-  }
-
+  imageSearch = new google.search.ImageSearch();
+    
+  var color_restriction = google.search.ImageSearch.COLOR_WHITE; // default color
+    
+  if(color == "blue") {
+    color_restriction = google.search.ImageSearch.COLOR_BLUE;
+  } 
+  else if(color == "red") {
+    color_restriction = google.search.ImageSearch.COLOR_RED;
+  } 
   else if(color == "brown") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_BROWN);
+    color_restriction = google.search.ImageSearch.COLOR_BROWN;
   } 
-
-  else if (color == "gray") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_GRAY);
+  else if(color == "gray") {
+    color_restriction = google.search.ImageSearch.COLOR_GRAY;
   } 
-  else if (color == "green") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_GREEN);
+  else if(color == "green") {
+    color_restriction = google.search.ImageSearch.COLOR_GREEN;
   } 
-  else if (color == "orange") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_ORANGE);
+  else if(color == "orange") {
+    color_restriction = google.search.ImageSearch.COLOR_ORANGE;
   }
-  else if (color == "teal") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_TEAL);
+  else if(color == "teal") {
+    color_restriction = google.search.ImageSearch.COLOR_TEAL;
   }
-  else if (color == "yellow") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_YELLOW);
+  else if(color == "yellow") {
+    color_restriction = google.search.ImageSearch.COLOR_YELLOW;
   }
-  else if (color == "black") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_BLACK);
+  else if(color == "black") {
+    color_restriction = google.search.ImageSearch.COLOR_BLACK;
   }
-  else if (color == "pink") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_PINK);
+  else if(color == "pink") {
+    color_restriction = google.search.ImageSearch.COLOR_PINK;
   }
-  else if (color == "purple") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_PURPLE);
+  else if(color == "purple") {
+    color_restriction = google.search.ImageSearch.COLOR_PURPLE;
   }
-  else if (color == "white") {
-    searcher.setRestriction(google.search.CustomSearchControl.getImageSearcher.COLOR_WHITE);
-  }
-
-  searcher.execute(search_keywords); //Search!
+  else if(color == "white") {
+    color_restriction = google.search.ImageSearch.COLOR_WHITE;
+  } 
+  //Set color restriction
+  imageSearch.setRestriction(
+    google.search.ImageSearch.RESTRICT_COLORFILTER,
+    color_restriction
+  );
+  imageSearch.setResultSetSize(num_images);
+  imageSearch.gotoPage(0);    
+    // Set searchComplete as the callback function when a search is 
+  // complete.  The imageSearch object will have results in it.
+  imageSearch.setSearchCompleteCallback(this, addResults, [color]);
+    // Search by keyword.
+  imageSearch.execute("boobs garbage");
 }
 
-google.load('search', '1', {language : 'en'});
+function addResults(color) 
+{ 
+  if (imageSearch.results && imageSearch.results.length > 0) 
+  {
+      // Loop through our results, printing them to the page.
+      var results = imageSearch.results;
+      images_by_color[color] = [];
+      $.each(results, function(index, result) //Then we cycle through results and add to array.
+      {console.log(color + ": " + result.tbUrl); 
+        images_by_color[color].push(result.tbUrl); 
+      } );     
+    }
+} 
+            
 
-$(document).ready(
-function() 
+function getGoogleImage(color)
 {
-  var images_by_color = {}; //Where the mosaic tiles will get their images from.
-  //see http://stackoverflow.com/a/4800250/805556. Prevents images from using the same variable, so they won't overwrite each other.
+  return images_by_color[color].randomValue(); //Pick a random value from the image array. See js/script.js for method definition.
+}
+
+
+function populate_canvas()
+{
   var imgs = [];
   var loaded = 0;
+  
   var loadCallBack = function ()
   {
     loaded++;
@@ -199,13 +248,24 @@ function()
     {
       var hex_color = mosaic_array[y][x]; //The hex color echoed by lib/mosaic_lib.php
       var google_color = getGoogleColor(hex_color); //"red", "blue", etc.
-
-      alert(google_color); //testing
-      var image_url = getGoogleImage(google_color, images_by_color); //Gets img src URL for canvas  
+      var image_url = getGoogleImage(google_color); //Gets img src URL for canvas  
       imgs[y][x] = new Image(); //Image objects are identified by their coords in this array.
       imgs[y][x].addEventListener('load', loadCallBack, false);
       imgs[y][x].src = image_url; 
     }
   }
+}
+
+google.load('search', '1', {language : 'en'});
+var images_by_color = {}; //Where the mosaic tiles will get their images from.
+
+$(document).ready(
+function() 
+{
+  //see http://stackoverflow.com/a/4800250/805556. Prevents images from using the same variable, so they won't overwrite each other.
+  var google_colors = ["blue","red","brown","gray","green","orange","teal","yellow","black","pink","purple","white"];
+  fetchGoogleImages(google_colors,4);
+  setTimeout("populate_canvas()", 10000);
+  
 } );
  
