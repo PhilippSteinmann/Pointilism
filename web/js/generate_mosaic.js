@@ -195,14 +195,17 @@ function requestGoogleImages(color,num_images)
 }
 
 function addResults(color) 
-{ 
+{
+  console.log("For " + color + ", we got " + imageSearch.results.length);
+  console.log(imageSearch.results);
   if (imageSearch.results && imageSearch.results.length > 0) 
   {
       // Loop through our results, printing them to the page.
       var results = imageSearch.results;
       images_by_color[color] = [];
       $.each(results, function(index, result) //Then we cycle through results and add to array.
-      {console.log(color + ": " + result.tbUrl); 
+      {
+        //console.log(color + ": " + result.tbUrl); 
         images_by_color[color].push(result.tbUrl); 
       } );     
     }
@@ -264,7 +267,7 @@ function()
 {
   //see http://stackoverflow.com/a/4800250/805556. Prevents images from using the same variable, so they won't overwrite each other.
   var google_colors = ["blue","red","brown","gray","green","orange","teal","yellow","black","pink","purple","white"];
-  fetchGoogleImages(google_colors,4);
+  fetchGoogleImages(google_colors,1);
   setTimeout("populate_canvas()", 10000);
   
 } );
