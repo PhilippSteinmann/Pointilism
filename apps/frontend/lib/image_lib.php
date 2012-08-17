@@ -16,7 +16,6 @@ class ImageManipulation
 		{
 		   $height = floor($width/$ratio_orig);
 		}
-
 		// Resample
 		$tempimg = imagecreatetruecolor($width, $height);
 		imagecopyresampled($tempimg, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
@@ -32,7 +31,8 @@ class ImageManipulation
 
 		else if ($img_type == IMAGETYPE_PNG)
 		{
-			imagepng($tempimg, $img_path, 80);	 	
+			imagepng($tempimg, $img_path, NULL);
+			//NULL is used because otherwise it doesn't work: http://stackoverflow.com/a/5946819/805556	 	
 		}
 		else
 		{

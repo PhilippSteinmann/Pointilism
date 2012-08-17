@@ -21,10 +21,6 @@
 			<option value="large">Large </option>
 		</select>
     </div>
-	<div class="col">
-		<input type="checkbox" id="large_mosaic" name="large_mosaic" value="1">
-		<label for="large_mosaic">Large Mosaic </label>
-	</div>
    
     <div class="col index-col">
         <p>Keywords for images: </p>

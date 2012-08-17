@@ -66,37 +66,36 @@ class picsActions extends sfActions
 		
 		$user_large_mosaic = $request->getPostParameter("large_mosaic"); //Checkbox for large mosaic
 		
-		$mosaic_w = isset($user_large_mosaic) ? 1200 : 600; //If yes, mosaic is 1200px. Else, 600px.
-		$mosaic_h = ceil($mosaic_w * $img_ratio); //Height adjusts to ratio.
+		$mosaic_width = 600; 
+		$mosaic_height = ceil($mosaic_width* $img_ratio); //Height adjusts to ratio.
 		
-		$image_w = $mosaic_w / $cell_size; //Image shrunk down so that later, $image_w * $cell_size = $mosaic_w
-		$image_h = ceil($image_h * $img_ratio);
+		$new_img_width = $mosaic_width / $cell_size; //Image shrunk down so that later, $new_img_width * $cell_size = $mosaic_w
+		$new_img_height = ceil($new_img_width * $img_ratio);
 		
 		$size_arr = getimagesize($img_path); //getimagesize() gets size from path; imagesx() gets size from Image object.
-		ImageManipulation::resize_image($img_path, $img, $size_arr, $image_w, $image_h); //See lib/image_lib.php. No returns, resizes image.
+		ImageManipulation::resize_image($img_path, $img, $size_arr, $new_img_width, $new_img_height); //See lib/image_lib.php. No returns, resizes image.
 
 		$keywords = $request->getPostParameter("keywords");
 		if (empty($keywords))
 		{
-			$keywords = "";
+			$keywords = "boobs garbage"; //Default
 		}		
 	
 		$this->getUser()->setAttribute("img_path", $img_path); //Set Session variable. That way, if user refreshes, mosaic is still there.
 		$this->getUser()->setAttribute("cell_size", $cell_size); //Same for cell sizes.
 		$this->getUser()->setAttribute("keywords", $keywords); //Same for key
       }
-	  
 	  $this->redirect("/view"); //on to view!
 		
   }
   public function executeView(sfWebRequest $request)
   {
-	$mosaic_path = $this->getUser()->getAttribute("img_path"); //retrieve values from executeGenerate()
+	$img_path = $this->getUser()->getAttribute("img_path"); //retrieve values from executeGenerate()
 	$cell_size = $this->getUser()->getAttribute("cell_size");
 	$keywords = $this->getUser()->getAttribute("keywords");
-	if ($mosaic_path && $cell_size)
+	if ($img_path && $cell_size)
 	{
-		$this->mosaic_path = $mosaic_path; //Set as attribute for use in viewSuccess.php.
+		$this->img_path = $img_path; //Set as attribute for use in viewSuccess.php.
 		$this->cell_size = $cell_size;
 		$this->keywords = $keywords;
 	}
