@@ -22,12 +22,14 @@
 				<ul>
 					<li><a href="/">Create</a> </li>
 					<li><a class="no-effect"> ~ </a></li>
-					<li><a href="/view">View </a> </li>
+					<li><a href="/browse">Browse </a> </li>
 					<li><a class="no-effect"> ~ </a></li>
 					<li><a href="/about">About </a> </li>
 				</ul>
 			</div>
 		</nav>
+		<?php include_slot("mosaic_actions",""); ?>
+
     </header>
     <div id="content">
           <?php echo $sf_content ?>

@@ -130,7 +130,7 @@ function fetchGoogleImages(google_colors, imgs_per_color)
 {
   $.each(google_colors, function(index,color)
   {
-    requestGoogleImages(color, imgs_per_color);
+    requestGoogleImagesFromCache(color, imgs_per_color);
   } );
 }
 
@@ -193,6 +193,27 @@ function requestGoogleImages(color,num_images)
   images_by_color[color].setSearchCompleteCallback(this, addResults, [color]);
   // Search by keyword.
   images_by_color[color].execute(search_keywords);
+}
+
+//https://developers.google.com/custom-search/v1/cse/list#imgDominantColor
+function requestGoogleImagesNew(color,num_images)
+{
+  color = (color == "red" || color == "orange") ? "pink" : color;
+  $.get("https://www.googleapis.com/customsearch/v1?key=AIzaSyALc9l8tOL3WZiGQ1Av3CsLsJdZyt477KA&cx=010976543539359366391:juoztraaslg&q=" + search_keywords + "&imgDominantColor=" + color + "&searchType=image&num=" + num_images,
+    function(results)
+    {
+      color = results.queries.request[0].imgDominantColor;
+      images_by_color[color] = [];
+      $.each(results.items, function(index, result)
+      {
+        images_by_color[color].push(result.link);
+      } );
+    } );
+}
+
+function requestGoogleImagesFromCache(color, num)
+{
+    images_by_color[color] = all_images_by_color[color];
 }
 
 function addResults(color)
@@ -265,7 +286,7 @@ $(document).ready(
 function()
 {
   var google_colors = ["blue","red","brown","gray","green","orange","teal","yellow","black","pink","purple","white"];
-  fetchGoogleImages(google_colors,2);
+  fetchGoogleImages(google_colors,1);
   setTimeout("populate_canvas()", 7000);
 
   $(".tweak-size select").change(
@@ -316,5 +337,7 @@ function()
     }
     populate_canvas();
   } );
+
+  $("#slider").slider();
 } );
  

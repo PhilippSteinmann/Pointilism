@@ -104,10 +104,6 @@ header nav li a
 	color: rgb(230,230,230);
     font: 24px/1 georgia, serif;
     text-decoration: none;
-
-    transition: 0.2s background-color;
-    -webkit-transition: 0.2s background-color;
-    -moz-transition: 0.2s background-color;
 }
 
 header nav li a:hover
@@ -245,26 +241,31 @@ header nav li a:hover
 	background-position:center;
 }
 
-#content .tweak-size, canvas
+.tweak-size, canvas
 {
 	float: left;
 }
 
-#content .tweak-size
+.tweak-size
 {
+	position: absolute;
+	right: 0;
+
 	margin-left: 20px;
 	line-height: normal;
 }
 
-#content .tweak-size input
+.tweak-size input
 {
 	line-height: normal;
 	width: 50px;	
 }
 
-#content .tweak-size p
+.tweak-size p
 {
 	display: inline;
+
+	color: white;
 }
 
 @media all and (max-width: 768px)

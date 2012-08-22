@@ -85,10 +85,10 @@ class picsActions extends sfActions
 		$this->getUser()->setAttribute("cell_size", $cell_size); //Same for cell sizes.
 		$this->getUser()->setAttribute("keywords", $keywords); //Same for key
       }
-	  $this->redirect("/view"); //on to view!
+	  $this->redirect("/browse"); //on to view!
 		
   }
-  public function executeView(sfWebRequest $request)
+  public function executeBrowse(sfWebRequest $request)
   {
 	$img_path = $this->getUser()->getAttribute("img_path"); //retrieve values from executeGenerate()
 	$cell_size = $this->getUser()->getAttribute("cell_size");
