@@ -78,7 +78,7 @@ class picsActions extends sfActions
 		$keywords = $request->getPostParameter("keywords");
 		if (empty($keywords))
 		{
-			$keywords = "boobs garbage"; //Default
+			$keywords = "cars"; //Default
 		}		
 	
 		$this->getUser()->setAttribute("img_path", $img_path); //Set Session variable. That way, if user refreshes, mosaic is still there.

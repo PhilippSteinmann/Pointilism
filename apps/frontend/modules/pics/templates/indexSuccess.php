@@ -12,7 +12,7 @@
     </div>
 	
     <div class="col index-col">
-        <p>Size of each Image: </p>
+        <p>Mosaic Resolution: </p>
     </div>
     <div class="col">
         <select name="size">

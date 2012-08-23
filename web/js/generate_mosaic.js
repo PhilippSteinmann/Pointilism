@@ -126,12 +126,35 @@ function getGoogleColor(target_color)
     }
 }
 
-function fetchGoogleImages(google_colors, imgs_per_color)
+function create_mosaic(google_colors, imgs_per_color)
 {
+  all_exist = true;
+  console.log("create_mosaic() called");
   $.each(google_colors, function(index,color)
   {
-    requestGoogleImagesFromCache(color, imgs_per_color);
+    if (!(color in images_by_color))
+    {
+      console.log("Color", color, "does not exist yet. Requesting...");
+      images_by_color[color] = [];
+      requestGoogleImagesFromCache(color, imgs_per_color);
+    }
+    else
+    {
+      if (images_by_color[color] === [])
+      {
+        all_exist = false;
+      }
+    }
   } );
+
+  if (all_exist === false)
+  {
+      setTimeout(create_mosaic, 300, [google_colors, imgs_per_color]);
+  }
+  else
+  {
+      populate_canvas();
+  }
 }
 
 
@@ -205,7 +228,7 @@ function requestGoogleImagesNew(color,num_images)
       color = results.queries.request[0].imgDominantColor;
       images_by_color[color] = [];
       $.each(results.items, function(index, result)
-      {
+      {console.log(result);
         images_by_color[color].push(result.link);
       } );
     } );
@@ -233,6 +256,7 @@ function addResults(color)
 
 function getGoogleImage(color)
 {
+  color = (color == "red" || color == "orange") ? "pink" : color;
   return images_by_color[color].randomValue(); //Pick a random value from the image array. See js/script.js for method definition.
 }
 
@@ -281,63 +305,3 @@ function populate_canvas()
 
 google.load('search', '1', {language : 'en'});
 var images_by_color = {}; //Where the mosaic tiles will get their images from.
-
-$(document).ready(
-function()
-{
-  var google_colors = ["blue","red","brown","gray","green","orange","teal","yellow","black","pink","purple","white"];
-  fetchGoogleImages(google_colors,1);
-  setTimeout("populate_canvas()", 7000);
-
-  $(".tweak-size select").change(
-  function()
-  {
-    var new_width = $(this).val();
-    var ratio = canvas.width / canvas.height;
-    var new_height = new_width / ratio;
-    $(".tweak-size #width").val(new_width);
-    $(".tweak-size #height").html(new_height);
-
-    old_width = canvas.width;
-    change_factor = new_width / old_width;
-    cell_size = cell_size * change_factor;
-
-    canvas.width = new_width;
-    canvas.height = new_height;
-    populate_canvas();
-  } );
-
-  $(".tweak-size #width").change(
-  function()
-  {
-    var new_width = $(this).val();
-    var ratio = canvas.width / canvas.height;
-    var new_height = new_width / ratio;
-    $(".tweak-size #height").html(new_height);
-
-    old_width = canvas.width;
-    change_factor = new_width / old_width;
-    cell_size = cell_size * change_factor;
-
-    canvas.width = new_width;
-    canvas.height = new_height;
-
-    $.each($(".tweak-size option"), function(index, option)
-    {
-      if (parseInt(new_width,10) >= parseInt(option.value,10))
-      {
-        $(option).attr("selected", "selected");
-      }
-
-    } );
-
-    if (new_width < 300)
-    {
-      $(".tweak-size option[value=300]").attr("selected","selected");
-    }
-    populate_canvas();
-  } );
-
-  $("#slider").slider();
-} );
- 

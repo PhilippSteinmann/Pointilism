@@ -28,8 +28,6 @@
 				</ul>
 			</div>
 		</nav>
-		<?php include_slot("mosaic_actions",""); ?>
-
     </header>
     <div id="content">
           <?php echo $sf_content ?>
