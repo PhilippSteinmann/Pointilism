@@ -1,12 +1,7 @@
 /*
   Project Status:
-  - Decided to use deprecated search.
-  - Current microwork is using SetTimeout until Google images arrive in getGoogleImage()
-  - It seems that we are getting results (as seen when logging imageSearch), but the variable is being overridden.
-  _____________________________________________________
-  - google.search.CustomSearchControl does not seem to work, method getImageSearcher() is undefined
-  - JSAPI Docs at https://developers.google.com/custom-search/v1/overview
-  */
+  - Do MySQL caching for imgages
+*/
 
 
 /*
