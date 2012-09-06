@@ -1,0 +1,13 @@
+images:
+  columns:
+    url:         { type: string(255) }
+    color:       { type: string(20)  }
+
+keywords:
+  columns:
+    keyword:     { type: string(100) }
+
+image_keyword_map:
+  columns:
+    image_id:    { type: integer }
+    keyword_id:  { type: integer }

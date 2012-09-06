@@ -44,7 +44,7 @@ class ImageManipulation
 	{
 		$size_arr = getimagesize($img_path);
 		$img_type = $size_arr[2];
-		
+
 		if ($img_type == IMAGETYPE_GIF)
 		{
 			$img = imagecreatefromgif($img_path);

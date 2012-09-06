@@ -124,12 +124,10 @@ function getGoogleColor(target_color)
 function create_mosaic(google_colors, imgs_per_color)
 {
   all_exist = true;
-  console.log("create_mosaic() called");
   $.each(google_colors, function(index,color)
   {
     if (!(color in images_by_color))
     {
-      console.log("Color", color, "does not exist yet. Requesting...");
       images_by_color[color] = [];
       requestGoogleImagesFromCache(color, imgs_per_color);
     }
@@ -149,6 +147,7 @@ function create_mosaic(google_colors, imgs_per_color)
   else
   {
       populate_canvas();
+      send_images_to_server();
   }
 }
 
@@ -296,6 +295,20 @@ function populate_canvas()
       imgs[y][x].src = image_url;
     }
   }
+}
+
+function send_images_to_server()
+{
+  console.log("now sending...");
+  $.each(images_by_color,  function(color, images)
+  {
+        post_array = {"color":color, "keywords":search_keywords, "images":images};
+        $.post("saveImages", {stuff:post_array},
+        function(data)
+        {
+            console.log(data);
+        } );
+  }  );
 }
 
 google.load('search', '1', {language : 'en'});

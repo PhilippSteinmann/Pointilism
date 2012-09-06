@@ -43,9 +43,9 @@ class picsActions extends sfActions
 		{
 			$new_fname = uniqid();
 		}
+
 		$img_path = $base_path . $new_fname;
 		move_uploaded_file($ftmp, $img_path); //move image from temp path to uploads path.
-		
 		
 		$img = ImageManipulation::imagecreatefrom($img_path); //see lib/image_lib.php. returns Image object.
 
@@ -101,7 +101,16 @@ class picsActions extends sfActions
 	}
 	else
 	{
-		echo "Create a mosaic at /"; //Placeholder that tells people where to create mosaic if they don't have one now.
+		echo "<a href='/'>Create a mosaic </a>"; //Placeholder that tells people where to create mosaic if they don't have one now.
 	}
+  }
+
+  public function executeSaveImages(sfWebRequest $request)
+  {
+  	$data = $request->getPostParameter("stuff");
+  	if (!empty($data))
+  	{
+  		$data = json_decode($data);
+  	}
   }
 }
