@@ -107,10 +107,40 @@ class picsActions extends sfActions
 
   public function executeSaveImages(sfWebRequest $request)
   {
-  	$data = $request->getPostParameter("stuff");
+  	$data = $request->getPostParameter("stuff"); //Sent from AJAX.
   	if (!empty($data))
   	{
-  		$data = json_decode($data);
+  		$data = json_decode($data); //Decode from JSON to PHP array
+  		$color = $data->color; //eg, "red"
+  		$keywords = $data->keywords; //eg, "unicorns"
+  		$images = $data->images; // Array of URLs
+
+  		$keyword = new keywords(); //MySQL INSERT.
+  		$keyword->setKeyword($keywords); 
+  		$keyword->save(); //Query executed
+  		$keyword_identifier = $keyword->identifier();
+  		$keyword_id = $keyword_identifier["id"]; //$keyword->identifier()["id"]; not possible :(
+
+  		foreach ($images as $image_url)
+  		{
+  			$image = new images(); //MySQL INSERT
+			$image->setColor($color); //All images have the same $color and $keywords.
+			$image->setUrl($image_url); 
+			$image->save(); //Query executed
+			$image_identifier = $image->identifier();
+			$image_id = $image_identifier["id"];
+
+			$image_keyword_relationship = new image_keyword_map();
+			$image_keyword_relationship->setKeywordId($keyword_id);
+			$image_keyword_relationship->setImageId($image_id);
+			$image_keyword_relationship->save(); //Query executed
+		}
   	}
   }
+
+  public function executeAbout(sfWebRequest $request)
+  {
+
+  }
 }
+	

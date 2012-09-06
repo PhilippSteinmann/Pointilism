@@ -129,7 +129,17 @@ function create_mosaic(google_colors, imgs_per_color)
     if (!(color in images_by_color))
     {
       images_by_color[color] = [];
-      requestGoogleImagesFromCache(color, imgs_per_color);
+      //var choose_from_cache = Math.random(); //Choose from cache for 5 out of 6 colors
+      //if (choose_from_cache <= (1/6) * 5) //83% chance
+      //{
+        //console.log("Getting " + color + " from cache....");
+        requestGoogleImagesFromCache(color, imgs_per_color*3); //No limit, can afford more.
+      //}
+      //else
+      //{
+        //console.log("Getting " + color + " from GImages....");
+        //requestGoogleImages(colors, imgs_per_color); //17% chance
+      //}
     }
     else
     {
@@ -159,7 +169,7 @@ function requestGoogleImages(color,num_images)
     - http://stackoverflow.com/q/11976747/805556
   */
   images_by_color[color] = new google.search.ImageSearch();
-    
+     
   var color_restriction = google.search.ImageSearch.COLOR_WHITE; // default color
     
   if(color == "blue") {
@@ -215,14 +225,17 @@ function requestGoogleImages(color,num_images)
 //https://developers.google.com/custom-search/v1/cse/list#imgDominantColor
 function requestGoogleImagesNew(color,num_images)
 {
+  console.log("Requesting from Google Images...");
   color = (color == "red" || color == "orange") ? "pink" : color;
   $.get("https://www.googleapis.com/customsearch/v1?key=AIzaSyALc9l8tOL3WZiGQ1Av3CsLsJdZyt477KA&cx=010976543539359366391:juoztraaslg&q=" + search_keywords + "&imgDominantColor=" + color + "&searchType=image&num=" + num_images,
     function(results)
     {
+      console.log("Got results!");
       color = results.queries.request[0].imgDominantColor;
       images_by_color[color] = [];
       $.each(results.items, function(index, result)
-      {console.log(result);
+      {
+        console.log(result);
         images_by_color[color].push(result.link);
       } );
     } );
@@ -277,6 +290,16 @@ function populate_canvas()
       }
     }
   };
+
+  function replace_image_url()
+  {
+      console.log("|" + this);  
+
+      //var hex_color = mosaic_array[y][x]; //The hex color echoed by lib/mosaic_lib.php
+      //var google_color = getGoogleColor(hex_color); //"red", "blue", etc.
+      //var image_url = getGoogleImage(google_color); //Gets img src URL for canvas
+      //this.src = image_url;
+  }
   
   //Iterate through the matrix of google colors
   for (var y in mosaic_array)
@@ -292,21 +315,34 @@ function populate_canvas()
       var image_url = getGoogleImage(google_color); //Gets img src URL for canvas
       imgs[y][x] = new Image(); //Image objects are identified by their coords in this array.
       imgs[y][x].addEventListener('load', loadCallBack, false);
+      $(imgs[y][x]).bind('error', replace_image_url);
       imgs[y][x].src = image_url;
+      /*function fuckyou() {alert("error!") }
+      
+
+      imgs[y][x].onerror =  function() { alert("ERROR!!!!!!!"); };
+      imgs[y][x].onerror = fuckyou;
+      
+
+      imgs[y][x].addEventListener('error', fuckyou, false);
+      imgs[y][x].onerror = fuckyou(this);
+      
+      $(imgs[y][x]).bind('error', function () {
+});
+      alert('hi');                                                */
     }
   }
 }
 
 function send_images_to_server()
 {
-  console.log("now sending...");
   $.each(images_by_color,  function(color, images)
   {
-        post_array = {"color":color, "keywords":search_keywords, "images":images};
+        var post_array = {"color":color, "keywords":search_keywords, "images":images};
+        post_array = JSON.stringify(post_array);
         $.post("saveImages", {stuff:post_array},
         function(data)
         {
-            console.log(data);
         } );
   }  );
 }
